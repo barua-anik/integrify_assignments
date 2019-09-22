@@ -1,0 +1,27 @@
+                            What follows is a peer review for the group: Jhansi, Uma, Mirazum, Keerthana
+
+This project is located at: https://github.com/jhansiturumella/MiniProject/blob/master/Mini_project.ipynb
+
+
+1. Data Import
+    - Used appropriated syntax and/or methodology for the import. The data imported was pre-formatted from Kaggle so there was no need for initial data exploration to appropriately label the features or format the data during import.
+    
+    Note: Setting global variables for axis and output before method definition is a bit inefficient/unnecessary.
+
+2. recognize_step_i implementation:
+    - This method is important as it separates the looping procedures from data retrieval.
+    - Think of it like this: You are looping through the keys for the kwargs argument in a function. At each step, you want to retrieve something from those keys which is some kind of executable method and that method's arguments. If you put all of the code necessary to retrieve that data inside your initial method, you would have a cluttered/difficult to read/understand method which means great difficulty in maintaining as well as debugging later. It is generally best practice to separate out steps which are substeps of larger problem-solving steps into a separate method.
+    
+3. dictionary_apply_kwarg_funs implementation:
+    - The reason this function does not execute properly is due to the setup. So, to review the requirements of this method and understand how to set things up at the beginning; I will talk about the outputs and work backward.
+    - This method provides two outputs: 1. A dictionary "output_" which is a history of what your dataframe looked like after each execution of a given function where the keys are "step_{i}". 2. Your original dataframe after all of the functions with the arguments you have specified have been executed on said dataframe.
+    - In order for this method to execute properly, the first steps are to instantiate a local variable to store your input dataframe as well as set up an empty dictionary to story the output history as well as a variable to store the number of "steps" in kwargs.
+    - During the loop implementation, "how_many_steps" is hard-coded to a constant. This means that, each time through the loop, that variable will be set to that value. This is why, at the end when the print statement is executed, the output value is "2".
+    - Next, "output_" is set to an empty dictionary within the loop. This means that, no matter how many times the loop runs, at completion, "output_" will be an empty dictionary.
+    - In essence, this method does no work with the provided dataframe and kwargs.
+    
+4. recognize_step_i Implementation:
+    - This method is intended to simply retrieve the function from kwargs and marry it up with the appropriate arguments, then return those two things to the caller.
+    - On lines 10 & 11, these method calls are a bit redundant in that, you already have the key for the appropriate method and associated arguments. All that needs to happen is to use ittemgetter to retriever these elements from the dictionary. Like this:
+        fun_1 = itemgetter(fun_string)(kwargs)
+        arg_dict = itemgetter(arg_string)(kwargs)
